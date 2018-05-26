@@ -1,0 +1,36 @@
+多线程即在同一时间，可以做多件事情。 
+
+创建多线程有3种方式，分别是继承线程类,实现Runnable接口,匿名类
+
+
+首先要理解进程(Processor)和线程(Thread)的区别 
+进程：启动一个LOL.exe就叫一个进程。 接着又启动一个DOTA.exe，这叫两个进程。 
+线程：线程是在进程内部同时做的事情，比如在LOL里，有很多事情要同时做，比如"盖伦” 击杀“提莫”，同时“赏金猎人”又在击杀“盲僧”，这就是由多线程来实现的。 
+
+
+在 Java 中实现多线程有两种手段，一种是继承 Thread 类，另一种就是实现 Runnable 接口。下面我们就分别来介绍这两种方式的使用。
+
+实现 Runnable 接口
+
+package ljz; 
+class MyThread implements Runnable{ // 实现Runnable接口，作为线程的实现类 
+    private String name ;       // 表示线程的名称 
+    public MyThread(String name){ 
+        this.name = name ;      // 通过构造方法配置name属性 
+    } 
+    public void run(){  // 覆写run()方法，作为线程 的操作主体 
+        for(int i=0;i<10;i++){ 
+            System.out.println(name + "运行，i = " + i) ; 
+        } 
+    } 
+}; 
+public class RunnableDemo01{ 
+    public static void main(String args[]){ 
+        MyThread mt1 = new MyThread("线程A ") ;    // 实例化对象 
+        MyThread mt2 = new MyThread("线程B ") ;    // 实例化对象 
+        Thread t1 = new Thread(mt1) ;       // 实例化Thread类对象 
+        Thread t2 = new Thread(mt2) ;       // 实例化Thread类对象 
+        t1.start() ;    // 启动多线程 
+        t2.start() ;    // 启动多线程 
+    } 
+};
