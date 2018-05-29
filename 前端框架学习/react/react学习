@@ -1,0 +1,174 @@
+
+
+语法学习：
+
+一、组件
+
+1、React 规定，自定义组件的第一个字母必须大写，比如MyTitle不能写成myTitle，以便与内置的原生类相区分。
+2、每个组件都必须有render方法，定义输出的样式。
+3、<MyTitle/>表示生成一个组件类的实例，每个实例一定要有闭合标签，写成<MyTilte></MyTitle>也可。
+
+4、组件名称总是以大写字母开始。
+
+举例来说, <div /> 代表一个 DOM 标签，而 <Welcome /> 则代表一个组件，并且需要在作用域中有一个 Welcome 组件。
+
+
+目前为止我们只学了一种更新UI的方式。
+
+我们通过调 ReactDOM.render() 方法来更新渲染的输出:
+
+function tick() {
+  const element = (
+    <div>
+      <h1>Hello, world!</h1>
+      <h2>It is {new Date().toLocaleTimeString()}.</h2>
+    </div>
+  );
+  ReactDOM.render(
+    element,
+    document.getElementById('root')
+  );
+}
+
+setInterval(tick, 1000);
+
+
+
+
+
+
+把函数式组件转化为类组件
+你可以遵从以下5步, 把一个类似 Clock 这样的函数式组件转化为类组件：
+
+创建一个继承自 React.Component 类的 ES6 class 同名类。
+添加一个名为 render() 的空方法。
+把原函数中的所有内容移至 render() 中。
+在 render() 方法中使用 this.props 替代 props。
+删除保留的空函数声明。
+
+
+
+
+class Clock extends React.Component {
+  render() {
+    return (
+      <div>
+        <h1>Hello, world!</h1>
+        <h2>It is {this.props.date.toLocaleTimeString()}.</h2>
+      </div>
+    );
+  }
+}
+
+
+Clock 现在被定为类组件，而不是函数式组件。
+
+类允许我们在其中添加本地状态(state)和生命周期钩子。
+
+
+
+在类组件中添加本地状态(state)
+我们现在通过以下3步, 把date从属性(props) 改为 状态(state)：
+
+替换 render() 方法中的 this.props.date 为 this.state.date：
+class Clock extends React.Component {
+  render() {
+    return (
+      <div>
+        <h1>Hello, world!</h1>
+        <h2>It is {this.state.date.toLocaleTimeString()}.</h2>
+      </div>
+    );
+  }
+}
+
+
+添加一个 类构造函数(class constructor) 初始化 this.state:
+class Clock extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {date: new Date()};
+  }
+
+  render() {
+    return (
+      <div>
+        <h1>Hello, world!</h1>
+        <h2>It is {this.state.date.toLocaleTimeString()}.</h2>
+      </div>
+    );
+  }
+}
+
+
+现有的结果是这样:
+
+class Clock extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {date: new Date()};
+  }
+
+  render() {
+    return (
+      <div>
+        <h1>Hello, world!</h1>
+        <h2>It is {this.state.date.toLocaleTimeString()}.</h2>
+      </div>
+    );
+  }
+}
+
+ReactDOM.render(
+  <Clock />,
+  document.getElementById('root')
+);
+
+
+
+
+
+
+
+
+
+
+
+
+this.state  方法：
+
+下面代码是一个 LikeButton 组件，它的 getInitialState 方法用于定义初始状态，也就是一个对象，这个对象可以通过 this.state 属性读取。当用户点击组件，导致状态变化，this.setState 方法就修改状态值，每次修改以后，自动调用 this.render 方法，再次渲染组件。
+
+var LikeButton = React.createClass({
+  getInitialState: function() {
+    return {liked: false};
+  },
+  handleClick: function(event) {
+    this.setState({liked: !this.state.liked});
+  },
+  render: function() {
+    var text = this.state.liked ? 'like' : 'haven\'t liked';
+    return (
+      <p onClick={this.handleClick}>
+        You {text} this. Click to toggle.
+      </p>
+    );
+  }
+});
+
+ReactDOM.render(
+  <LikeButton />,
+  document.getElementById('example')
+);
+
+
+
+
+
+
+
+
+React 组件的参数：
+
+
+
